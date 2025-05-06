@@ -15,72 +15,13 @@ interface CheckoutEmbedProps {
   embeddedCheckoutUrl: string;
 }
 
-// export default function CheckoutEmbed({ embeddedCheckoutUrl }: CheckoutEmbedProps) {
-//   const containerId = 'embedded-checkout-section';
-//   const scriptLoaded = useRef(false);
-
-//   useEffect(() => {
-//     if (scriptLoaded.current) return;
-
-//     const loadCheckout = async () => {
-//       try {
-//         // Load SDK
-//         const script = document.createElement('script');
-//         script.src = 'https://checkout-sdk.bigcommerce.com/v1/loader.js';
-//         script.async = true;
-//         document.body.appendChild(script);
-
-//         script.onload = async () => {
-//           if (window.checkoutKitLoader) {
-//             try {
-//               const module = await window.checkoutKitLoader.load('embedded-checkout');
-//               const service = module.embedCheckout({
-//                 url: embeddedCheckoutUrl,
-//                 containerId,
-//               });
-//               service
-//                 .then(() => console.log('Checkout embedded successfully'))
-//                 .catch((err: Error) => console.error('Error embedding checkout:', err));
-//             } catch (err) {
-//               console.error('Failed to load embedded-checkout module:', err);
-//             }
-//           } else {
-//             console.error('Checkout SDK loader not available');
-//           }
-//         };
-
-//         script.onerror = () => {
-//           console.error('Failed to load Checkout SDK script');
-//         };
-
-//         scriptLoaded.current = true;
-//       } catch (err) {
-//         console.error('Error loading checkout:', err);
-//       }
-//     };
-
-//     loadCheckout();
-
-//     return () => {
-//       const script = document.querySelector(
-//         `script[src="https://checkout-sdk.bigcommerce.com/v1/loader.js"]`,
-//       );
-//       if (script) script.remove();
-//     };
-//   }, [embeddedCheckoutUrl]);
-
-//   return <div id={containerId} className="w-full" style={{ minHeight: '600px' }} />;
-// }
-
 export default function CheckoutEmbed({ embeddedCheckoutUrl }: CheckoutEmbedProps) {
   const containerId = 'checkout-app';
   const scriptLoaded = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [useFallbackIframe, setUseFallbackIframe] = useState(false);
-  const router = useRouter();
-
-  console.log('CheckoutEmbed: embeddedCheckoutUrl:', embeddedCheckoutUrl);
+ 
 
   useEffect(() => {
     if (scriptLoaded.current) {
@@ -114,7 +55,7 @@ export default function CheckoutEmbed({ embeddedCheckoutUrl }: CheckoutEmbedProp
           try {
             console.log('CheckoutEmbed: Loading embedded-checkout module');
             const module = await window.checkoutKitLoader.load('embedded-checkout');
-            console.log('CheckoutEmbed: Embedded checkout module loaded:', module);
+            console.log('CheckoutEmbed: Embedded checkout module loaded');
 
             if (!embeddedCheckoutUrl.includes('/session-sync?jwt=')) {
               console.error('CheckoutEmbed: Invalid embeddedCheckoutUrl format');
@@ -127,7 +68,6 @@ export default function CheckoutEmbed({ embeddedCheckoutUrl }: CheckoutEmbedProp
               url: embeddedCheckoutUrl,
               containerId,
             });
-            console.log('CheckoutEmbed: Embed service initialized:', service);
 
             service
               .then(() => {
@@ -174,7 +114,6 @@ export default function CheckoutEmbed({ embeddedCheckoutUrl }: CheckoutEmbedProp
         `script[src="https://checkout-sdk.bigcommerce.com/v1/loader.js"]`,
       );
       if (script) {
-        console.log('CheckoutEmbed: Removing Checkout SDK script');
         document.body.removeChild(script);
       }
     };

@@ -28,10 +28,8 @@ export default async function EmbeddedCheckoutPage() {
   let errorFetchingUrl = false;
 
   try {
-    console.log(`EmbeddedCheckoutPage: Fetching embedded checkout URL for cartId: ${cartId}`);
     const customerAccessToken = await getSessionCustomerAccessToken();
-    console.log({ customerAccessToken });
-
+  
     const { data, errors } = await client.fetch({
       document: GetEmbeddedCheckoutUrlMutation,
       variables: { cartId },
@@ -46,10 +44,7 @@ export default async function EmbeddedCheckoutPage() {
       console.error('EmbeddedCheckoutPage: No embeddedCheckoutUrl in response.');
       errorFetchingUrl = true;
     } else {
-      console.log({ data });
-
       embeddedCheckoutUrl = data.cart.createCartRedirectUrls.redirectUrls.embeddedCheckoutUrl;
-      console.log('EmbeddedCheckoutPage: Fetched embedded checkout URL:', embeddedCheckoutUrl);
     }
   } catch (error) {
     console.error('EmbeddedCheckoutPage: Failed to fetch embedded checkout URL:', error);
