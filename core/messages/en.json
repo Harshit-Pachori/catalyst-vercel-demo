@@ -697,5 +697,22 @@
         "decrease": "Decrease count"
       }
     }
+  },
+  "CheckoutPage": {
+    "checkoutTitle": "Checkout",
+    "cartNotFound": "Your cart is empty or not found.",
+    "errorLoadingCheckout": "Unable to load checkout. Please try again.",
+    "returnToCart": "Return to Cart",
+    "loadingMessage": "Loading..."
+  },
+  "OrderConfirmationPage": {
+    "orderConfirmationTitle": "Order Confirmed",
+    "thankYouMessage": "Thank you for your order!",
+    "yourOrderNumber": "Your order number is",
+    "viewAccount": "View your account",
+    "continueShopping": "Continue shopping",
+    "orderSummary": "Order Summary",
+    "unableToDisplayDetails": "Unable to display order details at this time.",
+    "noOrderFound": "No Order Found."
   }
 }
