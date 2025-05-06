@@ -1,3 +1,4 @@
+"use client"
 import { notFound, useSearchParams } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
